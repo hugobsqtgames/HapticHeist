@@ -83,7 +83,11 @@ const C = {
 };
 
 const MONO = Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' }) as string;
-const DISPLAY = Platform.select({ ios: 'AvenirNextCondensed-Heavy', android: 'sans-serif-condensed', default: 'System' }) as string;
+const DISPLAY = Platform.select({
+  ios: 'AvenirNextCondensed-Heavy',
+  android: 'sans-serif-condensed',
+  default: "'Arial Narrow', 'Helvetica Neue', Arial, sans-serif",
+}) as string;
 
 const RARITY_META: Record<Rarity, { label: string; color: string; mult: number }> = {
   commun: { label: 'COMMUN', color: '#9BA4B2', mult: 1 },
@@ -1995,10 +1999,10 @@ function HeistLogo({ size = 210 }: { size?: number }) {
               <Stop offset="1" stopColor={C.goldHi} />
             </SvgLinearGradient>
           </Defs>
-          <SvgText x={180} y={46} fontSize={44} fontWeight="900" letterSpacing={10} textAnchor="middle" fill="url(#tSteel)" stroke="#000" strokeWidth={0.8}>
+          <SvgText x={180} y={46} fontSize={44} fontWeight="900" fontFamily={DISPLAY} letterSpacing={10} textAnchor="middle" fill="url(#tSteel)" stroke="#000" strokeWidth={0.8}>
             HAPTIC
           </SvgText>
-          <SvgText x={180} y={98} fontSize={58} fontWeight="900" letterSpacing={14} textAnchor="middle" fill="url(#tGold)" stroke="#2A1A04" strokeWidth={1}>
+          <SvgText x={180} y={98} fontSize={58} fontWeight="900" fontFamily={DISPLAY} letterSpacing={14} textAnchor="middle" fill="url(#tGold)" stroke="#2A1A04" strokeWidth={1}>
             HEIST
           </SvgText>
           <Line x1={20} y1={108} x2={120} y2={108} stroke={C.gold} strokeOpacity={0.5} />
@@ -2755,7 +2759,7 @@ function SplashScreen() {
  * 16. ÉCRAN : MENU PRINCIPAL (QG)
  * ════════════════════════════════════════════════════════════════════════ */
 
-function StatCard({ label, value, accent = C.gold, icon }: { label: string; value: string; accent?: string; icon: string }) {
+function StatCard({ label, value, sub, accent = C.gold, icon }: { label: string; value: string; sub?: string; accent?: string; icon: string }) {
   return (
     <LinearGradient colors={['#14171D', '#0A0C0F']} style={styles.statCard}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
@@ -2765,6 +2769,11 @@ function StatCard({ label, value, accent = C.gold, icon }: { label: string; valu
       <Text style={[styles.statValue, { color: accent }]} numberOfLines={1} adjustsFontSizeToFit>
         {value}
       </Text>
+      {sub ? (
+        <Text style={styles.statSub} numberOfLines={1}>
+          {sub}
+        </Text>
+      ) : null}
     </LinearGradient>
   );
 }
@@ -2789,10 +2798,10 @@ function MenuScreen({ career, onNavigate }: { career: Career; onNavigate: (s: Sc
         <HeistLogo size={Math.min(width * 0.56, 230)} />
       </View>
       <View style={styles.statsGrid}>
-        <StatCard label="CASSES RÉUSSIS" value={`${career.heists}`} icon="vault" />
-        <StatCard label="BUTIN TOTAL" value={formatMoneyShort(career.totalLoot)} icon="coin" />
-        <StatCard label="NIVEAU" value={`${career.level} · ${nextTier.type}`} accent={nextTier.accent} icon="dial" />
-        <StatCard label="RÉUSSITE" value={`${rate} %`} accent={C.cctv} icon="wave" />
+        <StatCard label="CASSES RÉUSSIS" value={`${career.heists}`} sub={`${career.failures} arrestation(s)`} icon="vault" />
+        <StatCard label="BUTIN TOTAL" value={formatMoneyShort(career.totalLoot)} sub={`${career.loot.length} objet(s)`} icon="coin" />
+        <StatCard label="NIVEAU" value={`${career.level}`} sub={nextTier.type} accent={nextTier.accent} icon="dial" />
+        <StatCard label="RÉUSSITE" value={`${rate} %`} sub={`${career.pinsCracked} goupille(s)`} accent={C.cctv} icon="wave" />
       </View>
       <View style={{ gap: 12, marginTop: 6 }}>
         <HeistButton
@@ -3338,7 +3347,7 @@ function SuccessScreen({
   const { width, height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const loot = result.loot as LootItem;
-  const doorSize = Math.min(width * 0.82, height * 0.45, 380);
+  const doorSize = Math.min(width * 0.78, height * 0.45, 380);
   const wheel = useRef(new Animated.Value(0)).current;
   const bolts = useRef(new Animated.Value(0)).current;
   const swing = useRef(new Animated.Value(0)).current;
@@ -3397,7 +3406,7 @@ function SuccessScreen({
       </Animated.View>
 
       <View style={{ height: doorSize + 20, alignItems: 'center', justifyContent: 'center' }}>
-        <Animated.View style={{ alignItems: 'center', justifyContent: 'center', transform: [{ scale: zoom.interpolate({ inputRange: [0, 1], outputRange: [1, 1.18] }) }] }}>
+        <Animated.View style={{ alignItems: 'center', justifyContent: 'center', transform: [{ scale: zoom.interpolate({ inputRange: [0, 1], outputRange: [1, 1.07] }) }] }}>
           {/* Cadre et intérieur du coffre */}
           <View style={[styles.vaultFrame, { width: doorSize + 16, height: doorSize + 16, borderRadius: (doorSize + 16) / 2 }]}>
             <LinearGradient colors={['#2B1C05', '#0A0703']} style={[StyleSheet.absoluteFill, { borderRadius: (doorSize + 16) / 2 }]} />
@@ -4500,6 +4509,7 @@ const styles = StyleSheet.create({
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 6 },
   statCard: { flexGrow: 1, flexBasis: '46%', borderRadius: 12, borderWidth: 1, borderColor: C.line, padding: 12 },
   statLabel: { color: C.textDim, fontFamily: MONO, fontSize: 9, letterSpacing: 1.5 },
+  statSub: { color: C.textMute, fontFamily: MONO, fontSize: 9, letterSpacing: 1, marginTop: 2 },
   statValue: { fontFamily: DISPLAY, fontSize: 22, fontWeight: '900', marginTop: 6, letterSpacing: 1 },
 
   tickerWrap: { marginTop: 16, borderTopWidth: 1, borderBottomWidth: 1, borderColor: C.cctvDeep, paddingVertical: 6, overflow: 'hidden', backgroundColor: 'rgba(6,38,26,0.35)' },

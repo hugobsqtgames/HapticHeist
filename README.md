@@ -26,3 +26,11 @@ In **Settings**:
 
 - **Visual haptic simulator**: flashes the screen border on every vibration.
 - **Cheat mode**: shows the targets and decoys on the dial and the Δ to the nearest one, widens the tolerance, and lets you pick the level in the briefing.
+
+## Mockup
+
+Screenshots of the real game, rendered for the web at 390×844 (`npx expo start --web`): [`docs/maquette/`](docs/maquette/).
+
+| Main menu | Heist | Loot reveal | Busted |
+|---|---|---|---|
+| ![](docs/maquette/01-menu.jpg) | ![](docs/maquette/05-heist-ancrage.jpg) | ![](docs/maquette/07-success-loot.jpg) | ![](docs/maquette/11-gameover.jpg) |
