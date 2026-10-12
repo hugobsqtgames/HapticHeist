@@ -13,6 +13,14 @@
     "android": {
       "package": "com.hugobsqtgames.hapticheist",
       "edgeToEdgeEnabled": true
+    },
+    "scheme": "hapticheist",
+    "plugins": [
+      "expo-router"
+    ],
+    "web": {
+      "bundler": "metro",
+      "output": "single"
     }
   }
 }
