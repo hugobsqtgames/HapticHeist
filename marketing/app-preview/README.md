@@ -5,7 +5,7 @@ A 29.9-second promo video and App Store screenshots, made **from the real app**.
 | File | Content |
 |---|---|
 | `out/haptic-heist-preview.mp4` | Main version: iPhone in motion, camera moves, text, real sound effects |
-| `out/haptic-heist-preview-store.mp4` | Full-screen version, no device frame (the safest for App Store review) |
+| `out/haptic-heist-preview-store.mp4` | Same film, with the app screen alone: no drawn iPhone and no 3D tilt (the safest for App Store review) |
 | `out/screenshots/*.png` | 6 App Store screenshots at 6.9" (1290 × 2796), taken from the same shots |
 | `STORYBOARD.md` | Project analysis, storyboard shot by shot, visual direction |
 
@@ -47,4 +47,4 @@ A full render takes about 10 minutes. The result is identical from one render to
 
 ## App Store note
 
-Apple asks that previews show the app itself. The full-screen version (`-store`) follows that rule to the letter. The version with the iPhone is better suited to the web, social networks and presentations.
+Apple asks that previews show the app itself. The `-store` version, with only the app screen and no drawn hardware, follows that rule to the letter. The version with the iPhone is better suited to the web, social networks and presentations.

@@ -6,7 +6,7 @@
  * `window.hh.render(n)` produit toujours exactement la même image.
  *
  *   ?variant=device  iPhone mis en scène (par défaut)
- *   ?variant=store   plein écran, sans cadre d'appareil
+ *   ?variant=store   l'écran de l'app seul, sans matériel dessiné ni inclinaison 3D
  */
 import * as TL from '../timeline.mjs';
 
@@ -94,9 +94,9 @@ function buildPhone(id, parent) {
   const rings = el('div', 'rings', root, { left: px(PHONE.bezel), top: px(PHONE.bezel), width: px(PHONE.screenW), height: px(PHONE.screenH) });
   const ringEls = Array.from({ length: 4 }, () => el('div', 'ring', rings, { opacity: 0 }));
   if (STORE) {
+    // Variante App Store : uniquement l'écran capturé (coins arrondis d'iOS), aucun matériel dessiné.
     body.style.display = 'none';
     root.querySelectorAll('.key').forEach((k) => (k.style.display = 'none'));
-    screen.style.borderRadius = '0px';
     island.style.display = 'none';
   }
   return { id, root, screen, imgA, imgB, macro, mask, dim, touch, ringEls, home, status };
@@ -143,10 +143,6 @@ const PHONES = {
   right: buildPhone('right', stage),
   main: buildPhone('main', stage),
 };
-if (STORE) {
-  PHONES.left.root.style.display = 'none';
-  PHONES.right.root.style.display = 'none';
-}
 const glow = document.getElementById('glow');
 const scrim = document.getElementById('scrim');
 const endcard = document.getElementById('endcard');
@@ -199,21 +195,9 @@ function screenAt(id, t) {
 }
 
 function storeCamera(cam) {
-  // Variante plein écran : l'écran remplit l'image, seuls les zooms et la bascule restent.
-  const base = WIDTH / PHONE.screenW;
-  const zoom = Math.max(1, cam.s);
-  return {
-    ...cam,
-    s: base * zoom,
-    x: WIDTH / 2,
-    y: zoom > 1.01 ? HEIGHT / 2 + (cam.y - 1238) * 0.35 : HEIGHT / 2,
-    fu: zoom > 1.01 ? cam.fu : 0.5,
-    fv: zoom > 1.01 ? cam.fv : 0.5,
-    ry: Math.abs(cam.ry) > 25 ? cam.ry : 0,
-    rx: 0,
-    o: 1,
-    blur: 0,
-  };
+  // Même cadrage que la version iPhone (les titres gardent leur espace), sans inclinaison 3D :
+  // seule la bascule de transition est conservée.
+  return { ...cam, ry: Math.abs(cam.ry) > 25 ? cam.ry : 0, rx: 0 };
 }
 
 function placePhone(p, cam) {
@@ -282,7 +266,7 @@ function drawTexts(t) {
     }
     if (spec.pos === 'top') topVisible = Math.max(topVisible, exitO);
   }
-  scrim.style.opacity = String(STORE ? Math.max(0.55, topVisible) : topVisible);
+  scrim.style.opacity = String(topVisible);
 }
 
 function drawEndCard(t) {
@@ -326,12 +310,11 @@ async function render(n) {
 
   for (const id of ['left', 'right', 'main']) {
     const p = PHONES[id];
-    if (STORE && id !== 'main') continue;
     const cam0 = CAMS[id](t);
     const cam = STORE ? storeCamera(cam0) : cam0;
     const c = placePhone(p, cam);
     if (id === 'main') center = c;
-    if (cam.o < 0.002 && !STORE) continue;
+    if (cam.o < 0.002) continue;
 
     const scr = screenAt(id, t);
     setSrc(p.imgA, frameSrc(scr.a.clip, scr.a.frame));
