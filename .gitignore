@@ -4,3 +4,6 @@ dist/
 web-build/
 *.log
 .DS_Store
+
+# App Store preview render cache
+marketing/app-preview/.cache/

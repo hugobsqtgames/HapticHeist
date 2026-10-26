@@ -55,10 +55,18 @@ In **Settings**:
 - **Haptic simulator**: flashes the screen border on every vibration.
 - **Cheat mode**: shows the targets and decoys on the dial, widens the tolerance, and lets you pick the level in the briefing.
 
+## App Store preview video
+
+A 29.9-second promo video and App Store screenshots, made from the real app (filmed frame by frame, with the app's own sound effects): see [`marketing/app-preview/`](marketing/app-preview/).
+
+- `marketing/app-preview/out/haptic-heist-preview.mp4`: iPhone in motion
+- `marketing/app-preview/out/haptic-heist-preview-store.mp4`: full-screen version for the App Store
+- `marketing/app-preview/out/screenshots/`: 6.9" screenshots (1290 × 2796)
+
 ## Mockup
 
-Screenshots captured from a real playthrough in `docs/maquette/`.
+App screens in iPhone 15 Pro format, from the same captures as the video: [`docs/maquette/`](docs/maquette/).
 
 | Home | Heist | Loot reveal | Busted |
 |---|---|---|---|
-| ![](docs/maquette/01-home.jpg) | ![](docs/maquette/05-ancrage.jpg) | ![](docs/maquette/07-loot.jpg) | ![](docs/maquette/11-busted.jpg) |
+| ![](docs/maquette/01-accueil.jpg) | ![](docs/maquette/05-ancrage.jpg) | ![](docs/maquette/07-butin-revele.jpg) | ![](docs/maquette/09-arrete.jpg) |

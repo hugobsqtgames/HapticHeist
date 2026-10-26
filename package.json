@@ -7,7 +7,11 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "preview": "npm run preview:capture && npm run preview:audio && npm run preview:render",
+    "preview:capture": "node marketing/app-preview/scripts/capture.cjs --rebuild",
+    "preview:audio": "node marketing/app-preview/scripts/soundtrack.cjs",
+    "preview:render": "node marketing/app-preview/scripts/render.cjs && node marketing/app-preview/scripts/render.cjs --variant=store && node marketing/app-preview/scripts/render.cjs --screenshots"
   },
   "dependencies": {
     "@expo/metro-runtime": "~57.0.16",
@@ -32,6 +36,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.0",
+    "playwright": "^1.56.1",
     "typescript": "~6.0.3"
   }
 }

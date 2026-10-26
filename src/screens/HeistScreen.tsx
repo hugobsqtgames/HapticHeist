@@ -113,6 +113,7 @@ export function HeistScreen() {
     engineCfg,
     {
       onAnchor: () => setStatus({ text: 'Ancrage — ne bougez plus', color: accent }),
+      onZoneLeft: () => !clock.ended && setStatus(IDLE_STATUS),
       onHoldBroken: (reason) =>
         flashStatus(reason === 'released' ? 'Doigt levé — goupille réinitialisée' : reason === 'tremble' ? 'Tremblement — goupille réinitialisée' : 'Glissement — goupille réinitialisée', C.red, 1200),
       onPinUnlocked: (idx) => {

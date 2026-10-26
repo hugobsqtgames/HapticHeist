@@ -18,6 +18,8 @@ export interface EngineConfig {
 
 export interface EngineCallbacks {
   onAnchor?: (decoy: boolean) => void;
+  /** Le cadran a quitté la zone d'ancrage sans maintien engagé. */
+  onZoneLeft?: () => void;
   onHoldBroken?: (reason: 'moved' | 'tremble' | 'released') => void;
   onPinUnlocked?: (pinIndex: number) => void;
   onAllUnlocked?: () => void;
@@ -175,6 +177,7 @@ export class LockEngine {
       this.cb.onAnchor?.(best.kind === 'decoy');
     } else if (!inLock && this.inZone) {
       if (this.holdProgress > 0.08) this.breakHold('moved');
+      else this.cb.onZoneLeft?.();
       this.inZone = null;
     }
   }

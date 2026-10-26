@@ -1,0 +1,234 @@
+/* Haptic Heist — App Store Preview : mise en page de l'image (886 × 1920). */
+:root {
+  --bg: #000000;
+  --text: #f5f5f7;
+  --text2: #a1a1a6;
+  --gold: #f5b942;
+  --on-gold: #1a1405;
+  --red: #ff453a;
+  --blue: #0a84ff;
+  --body: #0d0d0f;
+  --edge: #2c2c2e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+  overflow: hidden;
+}
+
+#frame {
+  position: relative;
+  width: 886px;
+  height: 1920px;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+#glow,
+#stage,
+#scrim,
+#texts,
+#endcard {
+  position: absolute;
+  inset: 0;
+}
+
+/* ───────── iPhone ───────── */
+
+.phone {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity, filter;
+}
+
+.phone .body {
+  position: absolute;
+  inset: 0;
+  background: var(--body);
+  border: 2px solid var(--edge);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 60px 140px rgba(0, 0, 0, 0.75);
+}
+
+.phone .key {
+  position: absolute;
+  width: 4px;
+  background: #222224;
+  border-radius: 2px;
+}
+
+.phone .screen {
+  position: absolute;
+  overflow: hidden;
+  background: #000;
+  isolation: isolate;
+}
+
+.phone .screen img.shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.phone .screen img.macro {
+  position: absolute;
+}
+
+.phone .island {
+  position: absolute;
+  background: #000;
+}
+
+.phone .statusbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.phone .statusbar .time {
+  position: absolute;
+  text-align: center;
+}
+
+.phone .statusbar svg {
+  position: absolute;
+}
+
+.phone .home {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.phone .touch {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.15);
+}
+
+.phone .rings,
+#end-rings {
+  position: absolute;
+  pointer-events: none;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border-style: solid;
+}
+
+/* ───────── Textes ───────── */
+
+#scrim {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0px, rgba(0, 0, 0, 0.78) 360px, rgba(0, 0, 0, 0) 640px);
+}
+
+.headline {
+  position: absolute;
+  left: 60px;
+  right: 60px;
+  text-align: center;
+  font-family: 'Inter Display', 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 86px;
+  line-height: 1.04;
+  letter-spacing: -2px;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+.headline .line {
+  display: block;
+  white-space: nowrap;
+}
+
+.headline .word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.headline .sub {
+  display: block;
+  margin-top: 26px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+  color: var(--text2);
+}
+
+/* ───────── Signature ───────── */
+
+#endcard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#end-icon {
+  width: 300px;
+  height: 300px;
+  border-radius: 68px;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+#end-title {
+  margin-top: 64px;
+  font-family: 'Inter Display', 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 100px;
+  letter-spacing: -2.5px;
+  line-height: 1;
+}
+
+#end-tagline {
+  margin-top: 22px;
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: -0.3px;
+}
+
+#end-cta {
+  margin-top: 84px;
+  height: 104px;
+  padding: 0 56px;
+  border-radius: 28px;
+  background: var(--gold);
+  color: var(--on-gold);
+  display: flex;
+  align-items: center;
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+
+#end-rings {
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
